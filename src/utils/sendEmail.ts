@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const sendEmail = async (receiver: string, subject: string, body: string): Promise<void> => {
   const data = JSON.stringify({
-    "From": "tech@brokerbridge.in",
+    "From": process.env.POSTMARK_SENDER_EMAIL,
     "To": receiver,
     "Subject": subject,
     "HtmlBody": body,

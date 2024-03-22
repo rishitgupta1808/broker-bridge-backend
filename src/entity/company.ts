@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 import { UserRole } from "./user_role";
 import { User } from "./user";
+import { Project } from "./project";
 
 @Entity()
 export class Company {
@@ -19,6 +20,9 @@ export class Company {
 
     @OneToOne(() => User, (user) => user.company)
     user: User;
+
+    @OneToOne(()=> Project, (project)=>project.company) 
+    project : Project[]
 
 }
 

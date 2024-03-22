@@ -4,6 +4,7 @@ const port = 3000;
 import bodyParser from "body-parser";
 import cors from "cors";
 import morgan from './config/loggger';
+import { ConfigureAWSCredentials } from './config/AWS';
 
 
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -16,6 +17,9 @@ http: app.options("*", cors());
 
 // parse application/json
 app.use(bodyParser.json({ limit: "50mb" }));
+
+//initiate functions before route
+ConfigureAWSCredentials()
 
 app.use('/api/v1', require('./api'))
 

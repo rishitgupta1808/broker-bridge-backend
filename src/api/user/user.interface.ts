@@ -8,4 +8,3 @@ export interface UserPayload {
     role: number;
     password: string;
 }
-

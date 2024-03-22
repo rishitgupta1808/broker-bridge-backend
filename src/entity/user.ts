@@ -20,6 +20,9 @@ export class User {
     @Column({ unique: true, length: 15 })
     number: string;
 
+    @Column({length: 200, type : "varchar", default : null })
+    profile_photo: string;
+
     @Column({ unique: true, length: 50 })
     aadhaar_number: string;
 
