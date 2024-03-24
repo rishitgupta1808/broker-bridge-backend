@@ -113,10 +113,10 @@ export const sendOtpChanggePasswordController = async(req: Request<unknown, unkn
   }
 }
 
-export const changePasswordController = async(req: Request<unknown, unknown,{email : string, old_password : string, new_password:  string}, unknown>, res: Response, next: NextFunction)  =>{
+export const changePasswordController = async(req: Request<unknown, unknown,{email : string, new_password:  string}, unknown>, res: Response, next: NextFunction)  =>{
   try {
-    const {email, old_password, new_password} = req.body
-    const user = await changePasswordService({email,  old_password, new_password})
+    const {email, new_password} = req.body
+    const user = await changePasswordService({email, new_password})
     return res.status(200).json({ 'success': true, message : "password change successfully" })
   } catch (error) {
     console.log(error)

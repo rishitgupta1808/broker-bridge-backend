@@ -208,19 +208,19 @@ export const sendOtpChangePasswordService = async (payload : {email : string}) =
   }
 }
 
-export const changePasswordService = async (payload : {email : string, old_password : string, new_password:  string}) =>{
+export const changePasswordService = async (payload : {email : string, new_password:  string}) =>{
   try{
-    const {email, new_password, old_password} = payload
+    const {email, new_password} = payload
 
     const userExist = await getRepository(User).findOne({where:{email:email}});
 
     if(!userExist)
     throw new Error("User with this email not Exist");
 
-    const isPasswordMatched = await compare(old_password, userExist.password)
-    if (!isPasswordMatched) {
-      throw new Error("Password not matched")
-    }
+    // const isPasswordMatched = await compare(old_password, userExist.password)
+    // if (!isPasswordMatched) {
+    //   throw new Error("Password not matched")
+    // }
 
     const user = await getRepository(User).update({
       email : email
