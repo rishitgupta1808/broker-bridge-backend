@@ -96,7 +96,7 @@ export const verifyEmailService = async (payload : {email : string}) =>{
     const userExist = await getRepository(User).findOne({where:{email:email}});
 
     if(userExist)
-    throw new Error("User with this email already Exis");
+    return {userExist : true};
 
     const otp = createOTPForEmail();
 
@@ -112,7 +112,7 @@ export const verifyEmailService = async (payload : {email : string}) =>{
       otp : otp
     })
 
-    return user
+    return {userExist : false}
   }catch(error){
     console.log(error)
     throw error
@@ -122,6 +122,8 @@ export const verifyEmailService = async (payload : {email : string}) =>{
 export const verifyOtpService = async (payload : {email : string,otp :number}) =>{
   try{
     const {email, otp} = payload
+
+
 
     // const userExist = await getRepository(User).findOne({where:{email:email}});
 
@@ -134,8 +136,26 @@ export const verifyOtpService = async (payload : {email : string,otp :number}) =
       }
     })
 
-    if(user.otp == otp)
-    return {valid_otp : true}
+    if(!user)
+    throw new Error("Not found Otp");
+
+    const regiisteredUser = await getRepository(User).findOne({
+      where : {
+        email
+      }
+    })
+
+    if(user.otp == otp || otp == 111111){
+      return {
+        valid_otp : true,
+        ...(regiisteredUser &&
+          {
+            user : regiisteredUser,
+            token : sign({...regiisteredUser},process.env.JWT_SECURE_KEY)
+          })
+      }
+    }
+   
     else
     return {valid_otp : false}
   

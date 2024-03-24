@@ -73,6 +73,10 @@ export const verifyEmialController = async(req: Request<unknown, unknown,{email 
   try {
     const {email} = req.body
     const user = await verifyEmailService({email})
+
+    if(user.userExist)
+    return res.status(200).json({ 'success': false, message : "User Already Exist" })
+    else
     return res.status(200).json({ 'success': true, message : "mail send  successfully" })
   } catch (error) {
     console.log(error)
