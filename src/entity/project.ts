@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 import { UserRole } from "./user_role";
 import { User } from "./user";
-import { AvailabilityStatus, PropertyType } from "../config/constant/enum";
+import { AmenitiesCommercial, AmenitiesResidential, AvailabilityStatus, PropertyType } from "../config/constant/enum";
 import { Company } from "./company";
 
 @Entity()
@@ -28,8 +28,8 @@ export class Project {
     @Column({length: 500, type: "varchar" })
     location: string;
 
-    @Column({length: 250, type: "varchar" })
-    amenities: string;
+    @Column({type: "enum", enum : [...Object.values(AmenitiesCommercial), ...Object.values(AmenitiesResidential)]})
+    amenities: AmenitiesCommercial | AmenitiesResidential;
 
     @Column({type: "numeric",precision: 18, scale: 2})
     starting_price: number;
