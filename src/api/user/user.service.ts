@@ -44,6 +44,34 @@ export const addUserService = async (payload: UserPayload) => {
     }
 }
 
+export const editUserService = async(payload: UserPayload) => {
+  try {
+
+      const { id, profile_photo, full_name, email, number, aadhaar_number } = payload
+
+      let user = {} as User;
+
+      Object.assign(user, {
+        id,
+        full_name,
+        email,
+        number,
+        aadhaar_number,
+        profile_photo,
+      });
+
+      console.log("user", user)
+
+      const saveUser = await getRepository(User).save(user);
+      return { user: saveUser };
+
+  } catch (error) {
+    console.log(error)
+    throw error;
+  }
+}
+
+
 export const getRolesService = async () => {
   try {
     const roles = await getRepository(UserRole).find()

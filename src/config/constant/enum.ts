@@ -22,8 +22,7 @@ export enum AmenitiesResidential {
     "Home Automation",
     "Park",
     "Gym",
-    "Kids Play Area",
-    "Other"
+    "Kids Play Area"
 }
 
 export enum AmenitiesCommercial {

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { UserPayload } from "./user.interface";
-import { addUserService, changePasswordService, getRolesService, getUserDetailsService, loginService, sendOtpChangePasswordService, sendOtpLoginService, verifyEmailService, verifyOtpService } from "./user.service";
+import { addUserService, changePasswordService, editUserService, getRolesService, getUserDetailsService, loginService, sendOtpChangePasswordService, sendOtpLoginService, verifyEmailService, verifyOtpService } from "./user.service";
+import { User } from "../../entity/user";
 
 export const addUserController = async (req: Request<unknown, unknown, UserPayload, unknown>, res: Response, next: NextFunction) => {
 
@@ -24,6 +25,35 @@ export const addUserController = async (req: Request<unknown, unknown, UserPaylo
       })
 
       return res.status(200).json({ 'success': true, data: addProductdtl })
+
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({ 'success': false, message: 'Error in adding the user', err: error.message });
+    }
+  }
+
+  export const editUserController = async (req: Request<unknown, unknown, UserPayload, unknown>, res: Response, next: NextFunction) => {
+
+    try {
+        const {
+            id,
+            profile_photo,
+            full_name,
+            email,
+            number,
+            aadhaar_number,
+        } = req.body
+     
+      const editProductdtl = await editUserService({
+        id,
+        full_name,
+        email,
+        number,
+        aadhaar_number,
+        profile_photo
+      })
+
+      return res.status(200).json({ 'success': true, data: editProductdtl })
 
     } catch (error) {
       console.log(error)

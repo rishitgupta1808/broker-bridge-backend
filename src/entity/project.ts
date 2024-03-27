@@ -28,7 +28,7 @@ export class Project {
     @Column({length: 500, type: "varchar" })
     location: string;
 
-    @Column({type: "enum", enum : [...Object.values(AmenitiesCommercial), ...Object.values(AmenitiesResidential)]})
+    @Column({type: "varchar"})
     amenities: AmenitiesCommercial | AmenitiesResidential;
 
     @Column({type: "numeric",precision: 18, scale: 2})
@@ -36,6 +36,24 @@ export class Project {
 
     @Column("simple-array")
     media: string[];
+
+    @Column({length: 500, type: "varchar" })
+    price_list: string;
+
+    @Column({length: 500, type: "varchar" })
+    payment_plan: string;
+
+    @Column({length: 500, type: "varchar" })
+    brocher: string;
+
+    @Column({length: 500, type: "varchar" })
+    floor_plan_2d: string;
+
+    @Column({length: 500, type: "varchar" })
+    floor_plan_3d: string;
+
+    @Column({length: 500, type: "varchar" })
+    virtual_tour: string;
 
     @ManyToOne(()=>Company, (company)=>company.project)
     @JoinColumn({name : 'company_id'})
