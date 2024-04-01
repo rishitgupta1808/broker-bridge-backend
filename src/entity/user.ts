@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, OneToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { UserRole } from "./user_role";
 import { Company } from "./company";
 
@@ -33,6 +33,13 @@ export class User {
     @OneToOne(() => Company, (company) => company.user)
     @JoinColumn({ name: "company_id" })
     company: Company;
+
+    @CreateDateColumn({ type: 'timestamp without time zone' })
+    created_date: Date;
+
+    @UpdateDateColumn({ type: 'timestamp without time zone' })
+    modified_date: Date;
+
 
 }
 

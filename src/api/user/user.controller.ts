@@ -99,10 +99,10 @@ export const getUserDetailsController = async(req: Request<{id : string}, unknow
   }
 }
 
-export const verifyEmialController = async(req: Request<unknown, unknown,{email : string}, unknown>, res: Response, next: NextFunction)  =>{
+export const verifyEmialController = async(req: Request<unknown, unknown,{email : string, otp : boolean}, unknown>, res: Response, next: NextFunction)  =>{
   try {
-    const {email} = req.body
-    const user = await verifyEmailService({email})
+    const {email, otp} = req.body
+    const user = await verifyEmailService({email, otp})
 
     if(user.userExist)
     return res.status(200).json({ 'success': false, message : "User Already Exist" })

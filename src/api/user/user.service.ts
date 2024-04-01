@@ -107,7 +107,14 @@ export const loginService = async (payload: {email: string, password: string}) =
 export const getUserDetailsService = async (payload : {id : number}) =>{
   try{
     const {id} = payload
-    const user = getRepository(User).find({where: {id}})
+    const user = getRepository(User).find({
+      where: {
+        id
+      },
+      relations: {
+        company : true
+      }
+    })
 
     return user
   }catch(error){
@@ -117,28 +124,30 @@ export const getUserDetailsService = async (payload : {id : number}) =>{
 }
 
 
-export const verifyEmailService = async (payload : {email : string}) =>{
+export const verifyEmailService = async (payload : {email : string, otp : boolean}) =>{
   try{
-    const {email} = payload
+    const {email, otp} = payload
 
     const userExist = await getRepository(User).findOne({where:{email:email}});
 
     if(userExist)
     return {userExist : true};
 
-    const otp = createOTPForEmail();
+    if(otp){
+      const otp = createOTPForEmail();
 
-    const readFile = promisify(fs.readFile);
-    let email_template_str  = await readFile('email-template.html','utf8');
-    email_template_str = email_template_str.replace("{{procedure}}", "Sign up");
-    let message = email_template_str.replace("{{Replace_Otp}}", otp.toString());
+      const readFile = promisify(fs.readFile);
+      let email_template_str  = await readFile('email-template.html','utf8');
+      email_template_str = email_template_str.replace("{{procedure}}", "Sign up");
+      let message = email_template_str.replace("{{Replace_Otp}}", otp.toString());
     
-    await sendEmail(email,process.env.OTP_SUBJECT_EMAIL,message)
+      await sendEmail(email,process.env.OTP_SUBJECT_EMAIL,message)
 
-    const user = await getRepository(Otp).save({
-      email,
-      otp : otp
-    })
+      const user = await getRepository(Otp).save({
+        email,
+        otp : otp
+      });
+    }
 
     return {userExist : false}
   }catch(error){

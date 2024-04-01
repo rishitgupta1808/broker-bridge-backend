@@ -44,7 +44,7 @@ export const listProjectService= async (payload: ListtProjectPayload) => {
         if(id)
         queryRunner.andWhere('project.id = :id', {id})
 
-        return await queryRunner.getMany();
+        return await queryRunner.orderBy('project.created_date',"DESC").getMany()
 
     } catch (error) {
       console.log(error)
