@@ -18,7 +18,9 @@ export interface ProjectPayload {
     floor_plan_3d: string;
     virtual_tour: string;
     company: number;
-    total_area : number
+    total_area : number;
+    bhk_value : string;
+
 
 }
 
