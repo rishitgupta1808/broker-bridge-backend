@@ -40,7 +40,8 @@ export const addProjectController = async (req: Request<unknown, unknown, Projec
         floor_plan_2d,
         floor_plan_3d,
         virtual_tour,
-        company
+        company,
+        total_area
       } = req.body
    
     const addProductdtl = await addProjectService({
@@ -59,7 +60,8 @@ export const addProjectController = async (req: Request<unknown, unknown, Projec
         floor_plan_2d,
         floor_plan_3d,
         virtual_tour,
-        company
+        company,
+        total_area
     })
 
     return res.status(200).json({ 'success': true, data: addProductdtl })

@@ -71,7 +71,6 @@ export const editUserService = async(payload: UserPayload) => {
   }
 }
 
-
 export const getRolesService = async () => {
   try {
     const roles = await getRepository(UserRole).find()
@@ -85,7 +84,7 @@ export const getRolesService = async () => {
 export const loginService = async (payload: {email: string, password: string}) => {
   try {
     const { email, password } = payload
-    const user = await getRepository(User).findOne({ where: { email: email }})
+    const user = await getRepository(User).findOne({ where: { email: email }, relations : {company : true}})
     
     const isPasswordMatched = await compare(password, user.password)
     if (!isPasswordMatched) {
@@ -122,7 +121,6 @@ export const getUserDetailsService = async (payload : {id : number}) =>{
     throw error
   }
 }
-
 
 export const verifyEmailService = async (payload : {email : string, otp : boolean}) =>{
   try{
@@ -179,6 +177,9 @@ export const verifyOtpService = async (payload : {email : string,otp :number}) =
     const regiisteredUser = await getRepository(User).findOne({
       where : {
         email
+      },
+      relations :{
+        company : true
       }
     })
 
