@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { AmenitiesCommercial, AmenitiesResidential } from "../../config/constant/enum";
 import { ListtProjectPayload, ProjectPayload } from "./project.interface";
 import { addProjectService, listProjectService } from "./project.service";
+import { CustomRequest } from "../../utils/validate";
 
 export const getResidentialAmmenities = (req: Request<unknown, unknown, unknown, unknown>, res: Response, next: NextFunction)  =>{
     try {
@@ -87,6 +88,31 @@ export const listProjectControler = async (req: Request<unknown, unknown, unknow
       property_type,
       search,
       id
+    })
+
+    return res.status(200).json({ 'success': true, data: addProductdtl })
+
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ 'success': false, message: 'Error in adding the user', err: error.message });
+  }
+}
+
+export const getMyProjectController = async (req: CustomRequest<ListtProjectPayload>, res: Response, next: NextFunction) => {
+
+  try {
+      const {
+        property_type,
+        search,
+        id,
+      } = req.query
+
+     
+    const addProductdtl = await listProjectService({
+      property_type,
+      search,
+      id,
+      userId : req.user.id
     })
 
     return res.status(200).json({ 'success': true, data: addProductdtl })

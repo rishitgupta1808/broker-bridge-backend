@@ -28,4 +28,5 @@ export interface ListtProjectPayload {
     property_type : PropertyType;
     search : string;
     id : string;
+    userId ?: number;
 }

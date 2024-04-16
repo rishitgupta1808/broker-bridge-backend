@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 
-interface CustomRequest extends Request {
+export interface CustomRequest<T> extends Request<T,unknown,unknown,T> {
     user?: UserPayload; // Assuming UserPayload is the type you want for the user property
 }
   
@@ -11,7 +11,7 @@ import jwt from 'jsonwebtoken';
 import { UserPayload } from '../api/user/user.interface';
 require('dotenv').config()
 
-export const validateUser = (req : CustomRequest, res : Response, next : NextFunction) => {
+export const validateUser = (req : CustomRequest<unknown>, res : Response, next : NextFunction) => {
     console.log("validate")
     const { authorization } = req.headers
     if (!authorization) {

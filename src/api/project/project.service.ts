@@ -27,7 +27,7 @@ export const addProjectService = async (payload: ProjectPayload) => {
 export const listProjectService= async (payload: ListtProjectPayload) => {
     try {
 
-        let {search, property_type, id} = payload
+        let {search, property_type, id, userId} = payload
 
         let queryRunner = getRepository(Project)
         .createQueryBuilder("project")
@@ -43,6 +43,10 @@ export const listProjectService= async (payload: ListtProjectPayload) => {
 
         if(id)
         queryRunner.andWhere('project.id IN (:...id)', {id  : id.trim().split(",")})
+
+        if(userId)
+        queryRunner.leftJoin("company.user",  "user").where("user.id =:id", {id : userId})
+        
 
         return await queryRunner.orderBy('project.created_date',"DESC").getMany()
 

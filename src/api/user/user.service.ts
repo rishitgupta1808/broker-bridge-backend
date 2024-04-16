@@ -84,7 +84,7 @@ export const getRolesService = async () => {
 export const loginService = async (payload: {email: string, password: string}) => {
   try {
     const { email, password } = payload
-    const user = await getRepository(User).findOne({ where: { email: email }, relations : {company : true}})
+    const user = await getRepository(User).findOne({ where: { email: email }, relations : {company : true, role  : true}})
     
     const isPasswordMatched = await compare(password, user.password)
     if (!isPasswordMatched) {
@@ -180,7 +180,8 @@ export const verifyOtpService = async (payload : {email : string,otp :number}) =
         email
       },
       relations :{
-        company : true
+        company : true,
+        role : true
       }
     })
 
