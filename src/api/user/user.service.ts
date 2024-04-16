@@ -111,7 +111,8 @@ export const getUserDetailsService = async (payload : {id : number}) =>{
         id
       },
       relations: {
-        company : true
+        company : true,
+        role : true
       }
     })
 

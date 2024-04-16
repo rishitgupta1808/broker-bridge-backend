@@ -31,8 +31,8 @@ export class Project {
     @Column({length: 500, type: "varchar" })
     location: string;
 
-    @Column({type: "varchar"})
-    amenities: AmenitiesCommercial | AmenitiesResidential;
+    @Column({type:  "simple-array"})
+    amenities: AmenitiesCommercial[] | AmenitiesResidential[];
 
     @Column({type: "numeric",precision: 18, scale: 2})
     starting_price: number;

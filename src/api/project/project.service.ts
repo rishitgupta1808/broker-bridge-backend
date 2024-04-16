@@ -35,14 +35,14 @@ export const listProjectService= async (payload: ListtProjectPayload) => {
 
         if(search){
             queryRunner.where('LOWER(project.name) LIKE LOWER(:searchString)', { searchString: `%${search.toLowerCase()}%` });
-            queryRunner.where('LOWER(project.location) LIKE LOWER(:searchString)', { searchString: `%${search.toLowerCase()}%` });
+            queryRunner.orWhere('LOWER(project.location) LIKE LOWER(:searchString)', { searchString: `%${search.toLowerCase()}%` });
         }
 
         if(property_type)
         queryRunner.andWhere('project.property_type = :property_type', {property_type})
 
         if(id)
-        queryRunner.andWhere('project.id = :id', {id})
+        queryRunner.andWhere('project.id IN (:...id)', {id  : id.trim().split(",")})
 
         return await queryRunner.orderBy('project.created_date',"DESC").getMany()
 

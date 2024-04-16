@@ -27,5 +27,5 @@ export interface ProjectPayload {
 export interface ListtProjectPayload {
     property_type : PropertyType;
     search : string;
-    id : number;
+    id : string;
 }
