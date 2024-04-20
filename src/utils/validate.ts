@@ -3,12 +3,14 @@ import { Request, Response, NextFunction } from 'express';
 
 
 export interface CustomRequest<T> extends Request<T,unknown,T,T> {
-    user?: UserPayload; // Assuming UserPayload is the type you want for the user property
+    user?: User; // Assuming UserPayload is the type you want for the user property
 }
   
   // Your existing UserPayload interface
 import jwt from 'jsonwebtoken';
 import { UserPayload } from '../api/user/user.interface';
+import { UserRoleEnum } from '../config/constant/enum';
+import { User } from '../entity/user';
 require('dotenv').config()
 
 export const validateUser = (req : CustomRequest<unknown>, res : Response, next : NextFunction) => {
@@ -28,3 +30,15 @@ export const validateUser = (req : CustomRequest<unknown>, res : Response, next 
         next()
     })
 }
+
+export const isBuilder = (req : CustomRequest<unknown>, res : Response, next : NextFunction) => {
+    console.log("check role")
+
+    console.log(req.user.role.id , UserRoleEnum.Builder + 1)
+    if(req.user.role.id === UserRoleEnum.Builder + 1)
+    next();
+    else
+    return res.status(403).json({ error: "Only Role Builder have permission to access the resource" })
+}
+
+

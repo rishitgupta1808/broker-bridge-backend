@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMan
 import { UserRole } from "./user_role";
 import { Company } from "./company";
 import { UserWatchlist } from "./user_watchlist";
+import { Post } from "./post";
 
 @Entity()
 export class User {
@@ -43,6 +44,9 @@ export class User {
 
     @OneToMany(() => UserWatchlist, (watchlist) => watchlist.user)
     watchlist: UserWatchlist[];
+
+    @OneToMany(() => Post, (post) => post.user)
+    post: Post[];
 
 
 }

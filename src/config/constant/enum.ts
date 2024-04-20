@@ -38,3 +38,8 @@ export enum AmenitiesCommercial {
     "Office Spaces",
     "Other"
 }
+
+export enum  UserRoleEnum {
+    "Broker",
+    "Builder"
+}

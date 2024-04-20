@@ -75,6 +75,62 @@ export const addProjectController = async (req: Request<unknown, unknown, Projec
   }
 }
 
+export const editProjectController = async (req: Request<unknown, unknown, ProjectPayload, unknown>, res: Response, next: NextFunction) => {
+
+  try {
+      const {
+        id,
+        property_type,
+        name,
+        url,
+        availability_status,
+        rera_registration_number,
+        location,
+        amenities,
+        starting_price,
+        media,
+        price_list,
+        payment_plan,
+        brocher,
+        floor_plan_2d,
+        floor_plan_3d,
+        virtual_tour,
+        company,
+        total_area,
+        bhk_value
+      } = req.body
+   
+    const addProductdtl = await addProjectService({
+        id,
+        property_type,
+        name,
+        url,
+        availability_status,
+        rera_registration_number,
+        location,
+        amenities,
+        starting_price,
+        media,
+        price_list,
+        payment_plan,
+        brocher,
+        floor_plan_2d,
+        floor_plan_3d,
+        virtual_tour,
+        company,
+        total_area,
+        bhk_value
+    })
+
+    return res.status(200).json({ 'success': true, data: addProductdtl })
+
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ 'success': false, message: 'Error in adding the user', err: error.message });
+  }
+}
+
+
 export const listProjectControler = async (req: Request<unknown, unknown, unknown, ListtProjectPayload>, res: Response, next: NextFunction) => {
 
   try {

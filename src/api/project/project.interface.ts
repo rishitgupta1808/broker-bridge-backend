@@ -2,6 +2,7 @@ import { AmenitiesCommercial, AmenitiesResidential, AvailabilityStatus, Property
 import { Company } from "../../entity/company";
 
 export interface ProjectPayload {
+    id ?: number;
     property_type: PropertyType;
     name: string;
     url: string;
