@@ -62,7 +62,7 @@ export const addProjectWatchlistService= async (payload: AddProjectWatchListPayl
 
         let {project, user} = payload
 
-        const isProject = await listProjectService({id : project})
+        const isProject = await listProjectService({id : String(project)})
 
         if(!isProject)
         return new Error("Project is nott available by this id")
