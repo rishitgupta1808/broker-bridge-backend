@@ -7,6 +7,7 @@ const router = Router()
 
 router.get("/roles", getRolesController)
 router.post("/login", loginController)
+router.get("/details",validateUser,getUserDetailsController)
 router.get("/:id",validateUser,getUserDetailsController)
 router.post("/", addUserController)
 router.post("/verify-email", verifyEmialController)

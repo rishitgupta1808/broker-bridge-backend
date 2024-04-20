@@ -1,7 +1,8 @@
 import { getRepository } from "typeorm";
-import { ListtProjectPayload, ProjectPayload } from "./project.interface";
+import { AddProjectWatchListPayload, ListtProjectPayload, ProjectPayload } from "./project.interface";
 import { Project } from "../../entity/project";
 import { Company } from "../../entity/company";
+import { UserWatchlist } from "../../entity/user_watchlist";
 
 export const addProjectService = async (payload: ProjectPayload) => {
     try {
@@ -49,6 +50,28 @@ export const listProjectService= async (payload: ListtProjectPayload) => {
         
 
         return await queryRunner.orderBy('project.created_date',"DESC").getMany()
+
+    } catch (error) {
+      console.log(error)
+      throw error;
+    }
+}
+
+export const addProjectWatchlistService= async (payload: AddProjectWatchListPayload) => {
+    try {
+
+        let {project, user} = payload
+
+        const isProject = await listProjectService({id : project})
+
+        if(!isProject)
+        return new Error("Project is nott available by this id")
+
+        let watchlist = new UserWatchlist()
+
+        Object.assign(watchlist, payload)
+
+        return await getRepository(UserWatchlist).save(watchlist)
 
     } catch (error) {
       console.log(error)

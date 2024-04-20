@@ -112,7 +112,8 @@ export const getUserDetailsService = async (payload : {id : number}) =>{
       },
       relations: {
         company : true,
-        role : true
+        role : true,
+        watchlist : true
       }
     })
 

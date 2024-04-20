@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { UserPayload } from "./user.interface";
 import { addUserService, changePasswordService, editUserService, getRolesService, getUserDetailsService, loginService, sendOtpChangePasswordService, sendOtpLoginService, verifyEmailService, verifyOtpService } from "./user.service";
 import { User } from "../../entity/user";
+import { CustomRequest } from "../../utils/validate";
 
 export const addUserController = async (req: Request<unknown, unknown, UserPayload, unknown>, res: Response, next: NextFunction) => {
 
@@ -83,10 +84,14 @@ export const loginController = async (req: Request<unknown, unknown, {email: str
   }
 }
 
-export const getUserDetailsController = async(req: Request<{id : string}, unknown, unknown, unknown>, res: Response, next: NextFunction) => {
+export const getUserDetailsController = async(req: CustomRequest<{id : string}>, res: Response, next: NextFunction) => {
   try {
-    
-    const id = parseInt(req.params.id, 10);
+
+    if(req.params.id)
+    var id = parseInt(req.params.id, 10);
+    else
+    var id = req.user.id
+
     console.log("id",id)
     if (isNaN(id))
     return res.status(400).json({ 'success': false, message: "Invalid Id format" });

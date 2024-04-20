@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 
-export interface CustomRequest<T> extends Request<T,unknown,unknown,T> {
+export interface CustomRequest<T> extends Request<T,unknown,T,T> {
     user?: UserPayload; // Assuming UserPayload is the type you want for the user property
 }
   

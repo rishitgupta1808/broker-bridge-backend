@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
 import { UserRole } from "./user_role";
 import { User } from "./user";
 import { AmenitiesCommercial, AmenitiesResidential, AvailabilityStatus, PropertyType } from "../config/constant/enum";
 import { Company } from "./company";
+import { UserWatchlist } from "./user_watchlist";
 
 @Entity()
 export class Project {
@@ -70,6 +71,9 @@ export class Project {
 
     @UpdateDateColumn({ type: 'timestamp without time zone' })
     modified_date: Date;
+
+    @OneToMany(()=>UserWatchlist,(watchlist)=>watchlist.project)
+    user_watchlist : UserWatchlist[];
 }
 
 

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { AmenitiesCommercial, AmenitiesResidential } from "../../config/constant/enum";
-import { ListtProjectPayload, ProjectPayload } from "./project.interface";
-import { addProjectService, listProjectService } from "./project.service";
+import { AddProjectWatchListPayload, ListtProjectPayload, ProjectPayload } from "./project.interface";
+import { addProjectService, addProjectWatchlistService, listProjectService } from "./project.service";
 import { CustomRequest } from "../../utils/validate";
 
 export const getResidentialAmmenities = (req: Request<unknown, unknown, unknown, unknown>, res: Response, next: NextFunction)  =>{
@@ -113,6 +113,31 @@ export const getMyProjectController = async (req: CustomRequest<ListtProjectPayl
       search,
       id,
       userId : req.user.id
+    })
+
+    return res.status(200).json({ 'success': true, data: addProductdtl })
+
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ 'success': false, message: 'Error in adding the user', err: error.message });
+  }
+}
+
+export const addProjectWatchlistController = async (req: CustomRequest<AddProjectWatchListPayload>, res: Response, next: NextFunction) => {
+
+  try {
+      const {
+        project
+      } = req.body
+
+      const {
+        id
+      } = req.user
+
+     
+    const addProductdtl = await addProjectWatchlistService({
+      project,
+      user : id
     })
 
     return res.status(200).json({ 'success': true, data: addProductdtl })

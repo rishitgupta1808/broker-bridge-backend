@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, OneToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { UserRole } from "./user_role";
 import { Company } from "./company";
+import { UserWatchlist } from "./user_watchlist";
 
 @Entity()
 export class User {
@@ -39,6 +40,9 @@ export class User {
 
     @UpdateDateColumn({ type: 'timestamp without time zone' })
     modified_date: Date;
+
+    @OneToMany(() => UserWatchlist, (watchlist) => watchlist.user)
+    watchlist: UserWatchlist[];
 
 
 }

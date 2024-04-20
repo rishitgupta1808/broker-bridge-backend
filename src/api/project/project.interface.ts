@@ -25,8 +25,13 @@ export interface ProjectPayload {
 }
 
 export interface ListtProjectPayload {
-    property_type : PropertyType;
-    search : string;
-    id : string;
+    property_type ?: PropertyType;
+    search ?: string;
+    id ?: string;
     userId ?: number;
+}
+
+export interface AddProjectWatchListPayload {
+    project : string
+    user ?:number
 }
