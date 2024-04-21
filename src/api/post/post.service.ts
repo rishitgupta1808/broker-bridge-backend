@@ -29,10 +29,24 @@ export const addPosttService = async (payload: PostPayload) => {
 }
 
 
-export const getPostService  = async () => {
+export const getPostService  = async (payload ?: {id :  number}) => {
     try {
 
+        const {id} = payload
+
         return await getRepository(Post).find({
+            relations: {
+                user : true
+            },
+            ...(
+                id !==  undefined && {
+                    where : {
+                        user : {
+                            id
+                        }
+                    }
+                }
+            ),
             order :{
                 created_date : "DESC"
             }

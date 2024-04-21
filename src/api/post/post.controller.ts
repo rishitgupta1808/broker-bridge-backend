@@ -48,6 +48,27 @@ export const getPosttController = async (req:   CustomRequest<PostPayload>, res:
   }
 }
 
+export const getMyPosttController = async (req:   CustomRequest<PostPayload>, res: Response, next: NextFunction) => {
+
+  try {
+
+    const {
+      id
+    } = req.user
+
+    console.log("dfer",id)
+   
+    const addProductdtl = await getPostService({id})
+
+    return res.status(200).json({ 'success': true, data: addProductdtl })
+
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ 'success': false, message: 'Error in adding the post', err: error.message });
+  }
+}
+
+
 export const likePostController = async (req: CustomRequest<PostPayload>, res: Response, next: NextFunction) => {
 
   try {
